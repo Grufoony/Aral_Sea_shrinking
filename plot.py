@@ -14,11 +14,11 @@ q = model.intercept_
 m = model.coef_
 
 # Plot
-plt.plot(years, areas)
 plt.plot(years, areas, 'bo')
 plt.plot(years, [-0.02216*x + 44.7826 for x in years])
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
 plt.xlabel('Years', fontsize=15)
 plt.ylabel('Normalize surface area', fontsize=15)
+plt.legend(['Data','b','Fit line'], fontsize=12)
 plt.savefig('./tex/linear_plot.pgf')
