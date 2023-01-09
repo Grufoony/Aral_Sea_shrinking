@@ -15,35 +15,36 @@ We used two or three clusters to optimize segmentation.
 In fact, the segmentation works great with dark (deep) water, but not with light (shallow) one: when the contrast is low is better to use more clusters with respect to the high contrast case. 
 Furthermore, the green spots near rivers are classified in the same cluster as the water. 
 This is not a problem for two reasons: firstly, the vegetation covers a much smaller area than the water and, secondly, we are interested in the shrinking ratio of the lake and the vegetation disappeared similarly to the water. 
-The output of the plugin is a gray level image.
+The output of the plugin is a gray level image, as we can see in Fig. \ref{fig:plugin}.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{.45\textwidth}
         \includegraphics[width=\textwidth]{../img/1987.jpg}
-        \caption{}
+        \caption{\emph{Original image.}}
     \end{subfigure}
     \begin{subfigure}[b]{.45\textwidth}
         \includegraphics[width=\textwidth]{../img/2clusters.jpg}
-        \caption{}
+        \caption{\emph{Result of k-means clustering.}}
     \end{subfigure}
-    \caption{}
+    \caption{\emph{K-clustering implementation with $k=2$ clusters.}}
     \label{fig:plugin}
 \end{figure}
 Once obtained the clusters image, using a threshold, we converted the images in binary ones: in this way we were able to separate the object (the sea) from the background, and count how many pixels represent water. 
 At this point, to compute the areal ratio, it is sufficient to divide the number of water pixels by a reference value. 
 We set this value to be the water surface of $1977$, i.e. the maximal extension of the lake. 
-Furthermore, we use the image from $1977$ as a mask for the others: in this way we can filter the lake's water pixels by considering as lake only the pixels that were water in $1977$. 
+Furthermore, we use the image from $1977$ as a mask for the others: in this way we can filter the lake's water pixels by considering as lake only the pixels that were water in $1977$.
+The result consist in a well constructed filter, as we can see in Fig. \ref{fig:masking}.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{.45\textwidth}
         \includegraphics[width=\textwidth]{../img/2015_with_noise.jpg}
-        \caption{}
+        \caption{\emph{Thresholded k-means clustering's output.}}
     \end{subfigure}
     \begin{subfigure}[b]{.45\textwidth}
         \includegraphics[width=\textwidth]{../img/2015w.jpg}
-        \caption{}
+        \caption{\emph{Masking result with image \\from 1977.}}
     \end{subfigure}
-    \caption{}
+    \caption{\emph{Comparison between unmasked (a) and masked (b) threshold.}}
     \label{fig:masking}
 \end{figure}
 To remove isolated pixels classified as sea's water we applied a median filter implemented in ImageJ, the ``despeckle'' filter. 
@@ -58,30 +59,32 @@ In fact, although there were attempts to preserve the north side of the lake wit
 We don't have enough data to explain a linear decreasing with time of the Aral Sea's surface area, but we can say that, after the deviation of its fed rivers, the water volume total balance was regulated by surface evaporation and total precipitation in the area. 
 This balance is a part of the water cycle, and it is almost constant during a year cycle, even if the evaporation rate is slowly increasing because of global warming. 
 Of course, in a desert area as the one we have analyzed, we expect that evaporation dominates over precipitation resulting in an almost constant surface area decrease through time.
-
-\begin{figure}[ht!]
+In Fig. \ref{fig:expo} we can see this linear trend.
+\begin{figure}[H]
     \centering
     \scalebox{.7}{\input{./linear_plot.pgf}}
-    \caption{\emph{}}
+    \caption{\emph{Time evolution of the shrinking ratio.
+                    A linear fit results in a coefficient $m=0.02 \ \left(years\right)^{-1}$.}}
     \label{fig:expo}
 \end{figure}
-
 Since our images are geo-localized, converting the path/row given from the satellite to lat/long coordinates we can get an approximate surface area in $km^2$ of our images and then, isolating the lake, we can estimate its reduction in terms of area extension. 
-Results are summarized on table 1. We remind that the surface area of the lake before it began to shrink was $68000\,km^2$ in $1960$.
-\begin{table}[]
+Results are summarized on Tab. \ref{tab:table}. We remind that the surface area of the lake before it began to shrink was $68000\,km^2$ in $1960$.
+\begin{table}[H]
 	\centering
-\begin{tabular}{|l|l|l}
-\cline{1-2}
-Year & Surface ratio &  \\ \cline{1-2}
-1977 & 1             &  \\ \cline{1-2}
-1987 & 0.7733        &  \\ \cline{1-2}
-1998 & 0.5273        &  \\ \cline{1-2}
-2006 & 0.2169        &  \\ \cline{1-2}
-2010 & 0.2058        &  \\ \cline{1-2}
-2013 & 0.1854        &  \\ \cline{1-2}
-2014 & 0.0904        &  \\ \cline{1-2}
-2015 & 0.1423        &  \\ \cline{1-2}
-2019 & 0.0859        &  \\ \cline{1-2}
-2021 & 0.0821        &  \\ \cline{1-2}
-\end{tabular}
+    \begin{tabular}{|l|l|l|l}
+    \cline{1-3}
+    Year & Surface ratio (a.u.) & Surface ($km^2$) & \\ \cline{1-3}
+    1977 & 1                    &            55142 & \\ \cline{1-3}
+    1987 & 0.7733               &            41922 & \\ \cline{1-3}
+    1998 & 0.5273               &            29792 & \\ \cline{1-3}
+    2006 & 0.2169               &            17069 & \\ \cline{1-3}
+    2010 & 0.2058               &            15161 & \\ \cline{1-3}
+    2013 & 0.1854               &            10936 & \\ \cline{1-3}
+    2014 & 0.0904               &             7900 & \\ \cline{1-3}
+    2015 & 0.1423               &             9632 & \\ \cline{1-3}
+    2019 & 0.0859               &             7399 & \\ \cline{1-3}
+    2021 & 0.0821               &             7584 & \\ \cline{1-3}
+    \end{tabular}
+    \caption{\emph{Report of the surface and surface ratio's time evolution data.}}
+    \label{tab:table}
 \end{table}
