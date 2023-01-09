@@ -14,7 +14,7 @@ Cluster centroids are determined using a heuristic: initially centroids are init
 We used two or three clusters to optimize segmentation. 
 In fact, the segmentation works great with dark (deep) water, but not with light (shallow) one: when the contrast is low is better to use more clusters with respect to the high contrast case. 
 Furthermore, the green spots near rivers are classified in the same cluster as the water. 
-This is not a problem for two reasons: firstly, the vegetation covers a much smaller area than the water and, secondly, we are interested in the shrinking ratio of the lake and the vegetation disappeared similarly to the water. 
+This is not a problem because we're interested mainly on the shrinking ratio: the vegetation covers a much smaller area than the water and disappeared similarly to the water. 
 The output of the plugin is a gray level image, as we can see in Fig. \ref{fig:plugin}.
 \begin{figure}[H]
     \centering
@@ -50,7 +50,7 @@ The result consist in a well constructed filter, as we can see in Fig. \ref{fig:
 To remove isolated pixels classified as sea's water we applied a median filter implemented in ImageJ, the ``despeckle'' filter. 
 This is a median filter that replaces each pixel with the median value in its $3 \times 3$ neighborhood~\cite{despeckle}.
 We removed these points because they represent a residual noise from the previous steps (k-mean clustering and threshold): they are dark points in the background. 
-This filter allows a better visualization of the images, and their area is negligible respect the total.
+This filter allows a better visualization of the images, and their area is negligible in respect of the total.
 
 The result of the analysis is reported in appendix. 
 Once we isolated water pixels in all the images, we were able to plot the evolution of shrinking ratio through time. 
@@ -64,7 +64,7 @@ In Fig. \ref{fig:expo} we can see this linear trend.
     \centering
     \scalebox{.7}{\input{./linear_plot.pgf}}
     \caption{\emph{Time evolution of the shrinking ratio.
-                    A linear fit results in a coefficient $m=0.02 \ \left(years\right)^{-1}$.}}
+                    A linear fit results in a coefficient $m=-0.02 \ \left(years\right)^{-1}$.}}
     \label{fig:expo}
 \end{figure}
 Since our images are geo-localized, converting the path/row given from the satellite to lat/long coordinates we can get an approximate surface area in $km^2$ of our images and then, isolating the lake, we can estimate its reduction in terms of area extension. 
