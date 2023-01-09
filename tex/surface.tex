@@ -1,8 +1,8 @@
-We found images of Aral Sea in the USGS’s archive~\cite{images} of different years: $1977$, $1987$, $1998$, $2006$, $2010$, $2013$, $2014$, $2015$, $2019$, $2021$. 
+We found images of Aral Sea in the USGS's archive~\cite{images} of different years: $1977$, $1987$, $1998$, $2006$, $2010$, $2013$, $2014$, $2015$, $2019$, $2021$.
 They cover a 44-years timespan from the beginning of exploitation of rivers water to our days. 
 USGS selects pictures of the same territory (same coordinates reference) so we did not need to geo-localize them. 
 The images are $1000 \times 991$ resolution RGB pictures with $32$ bits depth. 
-The contrast between water and all other elements is high and there are no clouds; the only similar brightness is the green spots due to vegetation near rivers. 
+The contrast between water and all other elements is high and there are no clouds; the only similar brightness is the green spots due to vegetation near rivers.
 
 To distinguish water pixels from all the others we used a segmentation technique, the k-mean Clustering of the program ImageJ. 
 k-means Clustering is implemented in ImageJ by a plugin~\cite{plugin} and performs a pixel-based segmentation of multi-band images. 
@@ -10,36 +10,54 @@ Each pixel in the input image is assigned to one of the clusters.
 Values in the output image produced by the plugin represent cluster number to which original pixel was assigned. 
 Each cluster is defined by its centroid in n-dimensional space. 
 Pixels are grouped by their proximity to cluster's centroids. 
-Cluster centroids are determined using a heuristic: initially centroids are initialized using the kmeans algorithm~\cite{kmeans} and then their location is interactively optimized~\cite{plugin}.
+Cluster centroids are determined using a heuristic: initially centroids are initialized using the k-means algorithm~\cite{kmeans} and then their location is interactively optimized~\cite{plugin}.
 We used two or three clusters to optimize segmentation. 
 In fact, the segmentation works great with dark (deep) water, but not with light (shallow) one: when the contrast is low is better to use more clusters with respect to the high contrast case. 
 Furthermore, the green spots near rivers are classified in the same cluster as the water. 
 This is not a problem for two reasons: firstly, the vegetation covers a much smaller area than the water and, secondly, we are interested in the shrinking ratio of the lake and the vegetation disappeared similarly to the water. 
-The output of the plugin is a gray level image. 
-
-IMAGE TO SHOW THE OUTPUT OF THE PLUGIN 
-
-Once obtained the clusters image, using a thresholding, we converted the images in binary ones: in this way we were able to separate the object (the sea) from the background, and count how many pixels represent water. 
+The output of the plugin is a gray level image.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{.45\textwidth}
+        \includegraphics[width=\textwidth]{../img/1987.jpg}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}[b]{.45\textwidth}
+        \includegraphics[width=\textwidth]{../img/2clusters.jpg}
+        \caption{}
+    \end{subfigure}
+    \caption{}
+    \label{fig:plugin}
+\end{figure}
+Once obtained the clusters image, using a threshold, we converted the images in binary ones: in this way we were able to separate the object (the sea) from the background, and count how many pixels represent water. 
 At this point, to compute the areal ratio, it is sufficient to divide the number of water pixels by a reference value. 
 We set this value to be the water surface of $1977$, i.e. the maximal extension of the lake. 
-Furthermore, we use the image from $1977$ as a mask for the others: in this way we can filter the lake’s water pixels by considering as lake only the pixels that were water in $1977$. 
-
-IMAGE TO SHOW THE MASKING 
-
-To remove isolated pixels classified as sea’s water we applied a median filter implemented in ImageJ, the “despeckle” filter. 
+Furthermore, we use the image from $1977$ as a mask for the others: in this way we can filter the lake's water pixels by considering as lake only the pixels that were water in $1977$. 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{.45\textwidth}
+        \includegraphics[width=\textwidth]{../img/2015_with_noise.jpg}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}[b]{.45\textwidth}
+        \includegraphics[width=\textwidth]{../img/2015w.jpg}
+        \caption{}
+    \end{subfigure}
+    \caption{}
+    \label{fig:masking}
+\end{figure}
+To remove isolated pixels classified as sea's water we applied a median filter implemented in ImageJ, the ``despeckle'' filter. 
 This is a median filter that replaces each pixel with the median value in its $3 \times 3$ neighborhood~\cite{despeckle}.
-We removed these points because they represent a residual noise from the previous steps (k-mean clustering and thresholding): they are dark points in the background. 
-This filter allows a better visualization of the images, and their area is neglectable respect the total.  
-
-IMAGE TO SHOW DESPECKLE 
+We removed these points because they represent a residual noise from the previous steps (k-mean clustering and threshold): they are dark points in the background. 
+This filter allows a better visualization of the images, and their area is negligible respect the total.
 
 The result of the analysis is reported in appendix. 
 Once we isolated water pixels in all the images, we were able to plot the evolution of shrinking ratio through time. 
 We can see that the total surface area of the lake is decreasing with an almost linear trend. 
 In fact, although there were attempts to preserve the north side of the lake with good results, the other side of it, the one with the majority of surface extension, was totally abandoned after the soviet irrigation project. 
-We don’t have enough data to explain a linear decreasing with time of the Aral sea’s surface area, but we can say that, after the deviation of its fed rivers, the water volume total balance was regulated by surface evaporation and total precipitation in the area. 
+We don't have enough data to explain a linear decreasing with time of the Aral Sea's surface area, but we can say that, after the deviation of its fed rivers, the water volume total balance was regulated by surface evaporation and total precipitation in the area. 
 This balance is a part of the water cycle, and it is almost constant during a year cycle, even if the evaporation rate is slowly increasing because of global warming. 
-Of course, in a desert area as the one we have analyzed, we expect that evaporation dominates over precipitation resulting in an almost constant surface area decrease through time.  
+Of course, in a desert area as the one we have analyzed, we expect that evaporation dominates over precipitation resulting in an almost constant surface area decrease through time.
 
 \begin{figure}[ht!]
     \centering
@@ -48,8 +66,8 @@ Of course, in a desert area as the one we have analyzed, we expect that evaporat
     \label{fig:expo}
 \end{figure}
 
-Since our images are geo-localised, converting the path/row given from the satellite to lat/long coordinates we can get an approximate surface area in $km^2$ of our images and then, isolating the lake, we can extimate its reduction in terms of area extension. 
-Results are summarized on table 1. We remind that the surface area of the lake before it began to shrink was $68000\,km^2$ in $1960$.  
+Since our images are geo-localized, converting the path/row given from the satellite to lat/long coordinates we can get an approximate surface area in $km^2$ of our images and then, isolating the lake, we can estimate its reduction in terms of area extension. 
+Results are summarized on table 1. We remind that the surface area of the lake before it began to shrink was $68000\,km^2$ in $1960$.
 \begin{table}[]
 	\centering
 \begin{tabular}{|l|l|l}
