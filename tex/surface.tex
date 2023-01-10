@@ -4,8 +4,8 @@ USGS selects pictures of the same territory (same coordinates reference) so we d
 The images are $1000 \times 991$ resolution RGB pictures with $32$ bits depth. 
 The contrast between water and all other elements is high and there are no clouds; the only similar brightness is the green spots due to vegetation near rivers.
 
-To distinguish water pixels from all the others we used a segmentation technique, the k-mean Clustering of the program ImageJ. 
-k-means Clustering is implemented in ImageJ by a plugin~\cite{plugin} and performs a pixel-based segmentation of multi-band images. 
+To distinguish water pixels from all the others we used a segmentation technique, the k-means clustering of the program ImageJ. 
+K-means clustering is implemented in ImageJ by a plugin~\cite{plugin} and performs a pixel-based segmentation of multi-band images. 
 Each pixel in the input image is assigned to one of the clusters. 
 Values in the output image produced by the plugin represent cluster number to which original pixel was assigned. 
 Each cluster is defined by its centroid in n-dimensional space. 
@@ -20,7 +20,7 @@ The output of the plugin is a gray level image, as we can see in Fig. \ref{fig:p
     \centering
     \begin{subfigure}[b]{.45\textwidth}
         \includegraphics[width=\textwidth]{../img/1987.jpg}
-        \caption{\emph{Original image.}}
+        \caption{\emph{Original image.\\}}
     \end{subfigure}
     \begin{subfigure}[b]{.45\textwidth}
         \includegraphics[width=\textwidth]{../img/2clusters.jpg}
@@ -32,7 +32,7 @@ The output of the plugin is a gray level image, as we can see in Fig. \ref{fig:p
 Once obtained the clusters image, using a threshold, we converted the images in binary ones: in this way we were able to separate the object (the sea) from the background, and count how many pixels represent water. 
 At this point, to compute the areal ratio, it is sufficient to divide the number of water pixels by a reference value. 
 We set this value to be the water surface of $1977$, i.e. the maximal extension of the lake. 
-Furthermore, we use the image from $1977$ as a mask for the others: in this way we can filter the lake's water pixels by considering as lake only the pixels that were water in $1977$.
+Furthermore, we use the image from $1977$, see Fig. \ref{fig:appendixsurface} (a), as a mask for the others: in this way we can filter the lake's water pixels by considering as lake only the pixels that were water in $1977$.
 The result consist in a well constructed filter, as we can see in Fig. \ref{fig:masking}.
 \begin{figure}[H]
     \centering
@@ -49,7 +49,7 @@ The result consist in a well constructed filter, as we can see in Fig. \ref{fig:
 \end{figure}
 To remove isolated pixels classified as sea's water we applied a median filter implemented in ImageJ, the ``despeckle'' filter. 
 This is a median filter that replaces each pixel with the median value in its $3 \times 3$ neighborhood~\cite{despeckle}.
-We removed these points because they represent a residual noise from the previous steps (k-mean clustering and threshold): they are dark points in the background. 
+We removed these points because they represent a residual noise from the previous steps (k-means clustering and threshold): they are dark points in the background. 
 This filter allows a better visualization of the images, and their area is negligible in respect of the total.
 
 The result of the analysis is reported in appendix. 
