@@ -9,7 +9,7 @@ Moreover, by combining the edge detection technique with operations between more
 
 ```BibTex
 @misc{AralSea,
-  author = {Berselli, Gregorio and Rondini, Tommaso and Balducci, Simone and Alsayed, Mustapha and Gargiulo, Federico},
+  author = {Alsayed, Mustapha and Balducci, Simone and Berselli, Gregorio and Rondini, Tommaso and Gargiulo, Federico},
   title = {Satellite Image Processing application to the shrinking Aral Sea.},
   year = {2023},
   url = {https://github.com/Grufoony/Aral_Sea_shrinking},
